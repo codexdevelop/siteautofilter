@@ -331,12 +331,12 @@ async def start(client:Client, message):
             ]]
 
             if verification_level > 1:
-            buttons.append([
-                InlineKeyboardButton("🐚 ʜᴏᴡ ᴛᴏ ᴠᴇʀɪғʏ 🐚", url=howtodownload)])
+                buttons.append([
+            InlineKeyboardButton("🐚 ʜᴏᴡ ᴛᴏ ᴠᴇʀɪғʏ 🐚", url=howtodownload)])
 
             if verification_level == 3:
-            buttons.append([
-                InlineKeyboardButton("🔄 Extra Verify", url=extra_verify_url)])
+                buttons.append([
+            InlineKeyboardButton("🔄 Extra Verify", url=extra_verify_url)])
 
             # Subscription Button (Don't Remove)
             buttons.append([
