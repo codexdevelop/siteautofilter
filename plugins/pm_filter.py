@@ -1482,22 +1482,16 @@ async def auto_filter(client, msg, spoll=False , pm_mode = False):
     links = ""
     if settings["link"]:
         btn = []
-        for file_num, file in enumerate(files, start=offset+1):links += f"""<b>\n\n{file_num}. <a href=https://t.me/{temp.U_NAME}?start=file_{query.message.chat.id}_{file.file_id}>[{get_size(file.file_size)}] {' '.join(filter(lambda x: not x.startswith('[') and not x.startswith('@') and not x.startswith('www.'), file.file_name.split()))}</a></b>"""
-    else: 
-        # Shortener apply karein based on verification level
-        verification_level = settings.get("verification_level", 1)
+    for file in files:  # Yeh ensure karega ki file variable exist karta hai
+    short_url = f"{SHORTENER_WEBSITE}/shorten?url={file.file_id}"
+    if verification_level >= 2:
+        short_url = f"{SHORTENER_WEBSITE2}/shorten?url={short_url}"
+    if verification_level == 3:
+        short_url = f"{SHORTENER_WEBSITE3}/shorten?url={short_url}"
 
-        short_url = f"{SHORTENER_WEBSITE}/shorten?url={file.file_id}"
-        if verification_level >= 2:
-            short_url = f"{SHORTENER_WEBSITE2}/shorten?url={short_url}"
-        if verification_level == 3:
-            short_url = f"{SHORTENER_WEBSITE3}/shorten?url={short_url}"
-
-        # Blogspot Redirection Setup
-        BLOGSPOT_URL = "https://technoji786.blogspot.com/redirect.html"
-        btn = [[InlineKeyboardButton(text=f"📁 {get_size(file.file_size)} ≽ {formate_file_name(file.file_name)}",url=f"{BLOGSPOT_URL}?file={short_url}")]
-        for file in files
-          ]
+    BLOGSPOT_URL = "https://technoji786.blogspot.com/redirect.html"
+    btn.append([InlineKeyboardButton(text=f"📁 {get_size(file.file_size)} ≽ {formate_file_name(file.file_name)}", url=f"{BLOGSPOT_URL}?file={short_url}")])
+	
     if offset != "":
         if total_results >= MAX_BTN:
             btn.insert(0,[
