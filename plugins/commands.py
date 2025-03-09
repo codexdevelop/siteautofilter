@@ -313,57 +313,14 @@ async def start(client:Client, message):
             verify_id = ''.join(random.choices(string.ascii_uppercase + string.digits, k=7))
             await db.create_verify_id(user_id, verify_id)
             temp.CHAT[user_id] = grp_id
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            
             settings = await get_settings(grp_id)
             verification_level = settings.get("verification_level", 1)
 
-# Verification level ke hisaab se shortener enable karein
-is_second_shortener = verification_level >= 2
-is_third_shortener = verification_level == 3
+            # Verification level ke hisaab se shortener enable karein
+            is_second_shortener = verification_level >= 2
+            is_third_shortener = verification_level == 3
 
-verify = await get_shortlink(
-    f"https://telegram.me/{temp.U_NAME}?start=notcopy_{user_id}_{verify_id}_{file_id}", 
-    grp_id, is_second_shortener, is_third_shortener, pm_mode=pm_mode
-)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            verify = await get_shortlink(f"https://telegram.me/{temp.U_NAME}?start=notcopy_{user_id}_{verify_id}_{file_id}", grp_id, is_second_shortener, is_third_shortener, pm_mode=pm_mode)
             
             if is_third_shortener:
                 howtodownload = settings.get('tutorial_3', TUTORIAL_3)
