@@ -184,9 +184,9 @@ async def next_page(bot, query):
 
         short_url = f"{SHORTENER_WEBSITE}/shorten?url={file.file_id}"
         if verification_level >= 2:
-        short_url = f"{SHORTENER_WEBSITE2}/shorten?url={short_url}"
+            short_url = f"{SHORTENER_WEBSITE2}/shorten?url={short_url}"
         if verification_level == 3:
-        short_url = f"{SHORTENER_WEBSITE3}/shorten?url={short_url}"
+            short_url = f"{SHORTENER_WEBSITE3}/shorten?url={short_url}"
 
         # Blogspot Redirection Setup
         BLOGSPOT_URL = "https://technoji786.blogspot.com/redirect.html"
@@ -1490,9 +1490,9 @@ async def auto_filter(client, msg, spoll=False , pm_mode = False):
 
         short_url = f"{SHORTENER_WEBSITE}/shorten?url={file.file_id}"
         if verification_level >= 2:
-        short_url = f"{SHORTENER_WEBSITE2}/shorten?url={short_url}"
+            short_url = f"{SHORTENER_WEBSITE2}/shorten?url={short_url}"
         if verification_level == 3:
-        short_url = f"{SHORTENER_WEBSITE3}/shorten?url={short_url}"
+            short_url = f"{SHORTENER_WEBSITE3}/shorten?url={short_url}"
 
         # Blogspot Redirection Setup
         BLOGSPOT_URL = "https://technoji786.blogspot.com/redirect.html"
