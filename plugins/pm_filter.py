@@ -1483,7 +1483,7 @@ async def auto_filter(client, msg, spoll=False , pm_mode = False):
     if settings["link"]:
         btn = []
     for file in files:  # Yeh ensure karega ki file variable exist karta hai
-    short_url = f"{SHORTENER_WEBSITE}/shorten?url={file.file_id}"
+        short_url = f"{SHORTENER_WEBSITE}/shorten?url={file.file_id}"
     if verification_level >= 2:
         short_url = f"{SHORTENER_WEBSITE2}/shorten?url={short_url}"
     if verification_level == 3:
