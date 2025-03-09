@@ -1164,4 +1164,22 @@ async def reset_group_command(client, message):
     reply_markup = InlineKeyboardMarkup(btn)
     await save_default_settings(grp_id)
     await message.reply_text('🫧ꜱᴜᴄᴄᴇꜱꜱғᴜʟʟʏ ʀᴇꜱᴇᴛ ɢʀᴏᴜᴘ ꜱᴇᴛᴛɪɴɢꜱ...')
+
+@Client.on_message(filters.command("set_verify_level") & filters.group)
+async def set_verify_level(client, message):
+    user_id = message.from_user.id
+
+    # Check if user is Admin or Premium
+    if not await is_check_admin(client, message.chat.id, user_id) and not await db.has_premium_access(user_id):
+        return await message.reply("🛑 Sirf Admin ya Premium Users is command ka use kar sakte hain!")
+
+    try:
+        level = int(message.command[1])
+        if level not in [1, 2, 3]:
+            return await message.reply("🛑 Invalid value! Sirf 1, 2 ya 3 choose karein.")
+    except:
+        return await message.reply("❓ Use: `/set_verify_level 1/2/3`")
+
+    await save_group_settings(message.chat.id, 'verification_level', level)
+    await message.reply(f"✅ Verification level {level} set kar diya gaya hai!")
     
