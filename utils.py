@@ -201,25 +201,40 @@ def list_to_str(k):
     else:
         return ', '.join(str(item) for item in k)
 
-
-async def get_shortlink(link, grp_id, is_second_shortener=False, is_third_shortener=False , pm_mode=False):
+async def get_shortlink(link, grp_id, is_second_shortener=False, is_third_shortener=False, pm_mode=False):
     if not pm_mode:
         settings = await get_settings(grp_id)
     else:
         settings = SETTINGS
-    if IS_VERIFY:
-        if is_third_shortener:             
-            api, site = settings['api_three'], settings['shortner_three']
-        else:
-            if is_second_shortener:
-                api, site = settings['api_two'], settings['shortner_two']
-            else:
-                api, site = settings['api'], settings['shortner']
+
+    verification_level = settings.get("verification_level", 1)
+
+    # Pehla shortener
+    api, site = settings['api'], settings['shortner']
+    shortzy = Shortzy(api, site)
+    try:
+        link = await shortzy.convert(link)
+    except Exception as e:
+        link = await shortzy.get_quick_link(link)
+
+    # Agar verification level 2 hai ya is_second_shortener True hai
+    if verification_level >= 2 or is_second_shortener:
+        api, site = settings['api_two'], settings['shortner_two']
         shortzy = Shortzy(api, site)
         try:
             link = await shortzy.convert(link)
         except Exception as e:
             link = await shortzy.get_quick_link(link)
+
+    # Agar verification level 3 hai ya is_third_shortener True hai
+    if verification_level == 3 or is_third_shortener:
+        api, site = settings['api_three'], settings['shortner_three']
+        shortzy = Shortzy(api, site)
+        try:
+            link = await shortzy.convert(link)
+        except Exception as e:
+            link = await shortzy.get_quick_link(link)
+
     return link
 
 def get_file_id(message: "Message") -> Any:
