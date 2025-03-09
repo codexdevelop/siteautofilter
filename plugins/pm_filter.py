@@ -1476,7 +1476,7 @@ async def auto_filter(client, msg, spoll=False , pm_mode = False):
     temp.FILES_ID[f"{message.chat.id}-{message.id}"] = batch_ids
     batch_link = f"batchfiles#{message.chat.id}#{message.id}#{message.from_user.id}"
     temp.CHAT[message.from_user.id] = message.chat.id
-    settings = await get_settings(query.message.chat.id)
+    settings = await get_settings(message.chat.id , pm_mode=pm_mode)
     reqnxt  = query.from_user.id if query.from_user else 0
     temp.CHAT[query.from_user.id] = query.message.chat.id
 
