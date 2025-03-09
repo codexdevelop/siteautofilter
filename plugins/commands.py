@@ -351,6 +351,16 @@ async def start(client:Client, message):
             user_id = message.from_user.id 
             grp_id = temp.CHAT.get(user_id)
             settings = await get_settings(grp_id, pm_mode=pm_mode)
+            verification_level = settings.get("verification_level", 1)
+            if verification_level == 3:
+                is_second_shortener = await db.use_second_shortener(user_id, settings.get('verify_time', TWO_VERIFY_GAP)) 
+                is_third_shortener = await db.use_third_shortener(user_id, settings.get('third_verify_time', THREE_VERIFY_GAP))
+            elif verification_level == 2:
+                  is_second_shortener = await db.use_second_shortener(user_id, settings.get('verify_time', TWO_VERIFY_GAP)) 
+                  is_third_shortener = False
+            else:
+                is_second_shortener = False
+                is_third_shortener = False      
             CAPTION = settings['caption']
             f_caption = CAPTION.format(
                 file_name=formate_file_name(file.file_name),
